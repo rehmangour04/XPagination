@@ -3,11 +3,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+
 const App = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(10);
 
   useEffect(() => {
     fetchData();
@@ -25,29 +24,22 @@ const App = () => {
     }
   };
 
+  const totalPages = Math.ceil(data.length / 10);
+
   const nextPage = () => {
-    if (currentPage < totalPages()) {
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      const newStartIndex = currentPage * 10;
-      const newEnddIndex = Math.min(newStartIndex + 10, data.length);
-      setStartIndex(newStartIndex);
-      setEndIndex(newEndIndex);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      const newStartIndex = (currentPage - 2) * 10;
-      const newEndIndex = Math.min(newStartIndex + 10, data.length);
-      setStartIndex(newStartIndex);
-      setEndIndex(newEndIndex);
     }
   };
 
-  const totalPages = () => {
-    return Math.ceil(data.length / 10);
-  };
+  const startIndex = (currentPage - 1) * 10;
+  const endIndex = Math.min(startIndex + 10, data.length);
 
   return (
     <div>
@@ -78,7 +70,7 @@ const App = () => {
           Previous
         </button>
         <span className="page-info"> {currentPage} </span>
-        <button onClick={nextPage} disabled={currentPage === totalPages()}>
+        <button onClick={nextPage} disabled={currentPage === totalPages}>
           Next
         </button>
       </div>
