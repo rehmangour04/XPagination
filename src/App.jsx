@@ -66,7 +66,7 @@ const App = () => {
       </table>
 
       <div>
-        <button onClick={prevPage} disabled={currentPage === 1}>
+        <button onClick={prevPage} disabled={currentPage <= 1}>
           Previous
         </button>
         <span className="page-info"> {currentPage} </span>
