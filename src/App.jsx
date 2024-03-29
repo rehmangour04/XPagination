@@ -22,6 +22,7 @@ function App() {
       setEmpData(data);
       setLoading(false);
     } catch (err) {
+      alert("failed to fetch data");
       setError("Failed to fetch data");
       setLoading(false);
     }
